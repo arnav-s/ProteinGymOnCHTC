@@ -1,0 +1,26 @@
+# HTC Submit File
+
+# Provide HTCondor with the name of the Docker container
+container_image = docker://arnvsharma/proteingym-chtc:latest
+universe = container
+
+executable = trainEVE.sh
+arguments = $(Process)
+
+transfer_input_files = ProteinGym.tar.gz
+
+log = proteinGym_job$(Process).log
+error = proteinGym_job$(Process).err
+output = proteinGym_job$(Process).out
+
+Requirements = (Target.HasCHTCStaging == true)
+
++WantGPULab = true
++GPUJobLength = "short"
+request_cpus = 8
+request_gpus = 1
+request_memory = 32GB
+request_disk = 50GB
+
+# Specify 6 jobs
+queue 6

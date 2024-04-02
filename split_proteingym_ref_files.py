@@ -4,12 +4,16 @@ import os, sys
 BATCH_SIZE = 30
 
 if __name__ == '__main__':
-    assert len(sys.argv) == 3, "Usage: python split_proteingym_ref_files.py <path_to_input_csv> <path_to_output_dir>"
-    
+    if len(sys.argv) == 2:
+        output_dir = 'CHTC_reference_files'
+    elif len(sys.argv) == 3:
+        output_dir = sys.argv[2]
+    else:
+        print("Usage: python split_proteingym_ref_files.py <path_to_input_csv> <path_to_output_dir>")
+        exit(1)
+
     file_path = sys.argv[1]
-    output_dir = sys.argv[2]
-    if not os.path.isdir('CHTC_reference_files'):
-        os.mkdir('CHTC_reference_files')
+
     if not os.path.isdir(output_dir):
         os.mkdir(output_dir)
     filename = file_path.split(os.sep)[-1].split('.')[0]
