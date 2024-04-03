@@ -1,7 +1,7 @@
 import pandas as pd
 import os, sys
 
-BATCH_SIZE = 30
+BATCH_SIZE = 7
 
 if __name__ == '__main__':
     if len(sys.argv) == 2:
@@ -22,7 +22,9 @@ if __name__ == '__main__':
     csv = pd.read_csv(file_path)
     csvs = []
     dividing_indices = [(i*BATCH_SIZE, (i+1)*BATCH_SIZE-1) for i in range(len(csv)//BATCH_SIZE - 1)]
+    dividing_indices.append(((len(csv)//BATCH_SIZE - 1)*BATCH_SIZE, len(csv)-1))
 
+    print(f"Indices: {dividing_indices}")
     for ind in dividing_indices:
         csvs.append(csv.loc[ind[0]:ind[1]].copy())
         csvs[-1].reset_index(inplace = True, drop = True)

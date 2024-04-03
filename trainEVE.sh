@@ -30,11 +30,17 @@ export model_parameters_location='../../proteingym/baselines/EVE/EVE/deepseq_mod
 export training_logs_location='../../proteingym/baselines/EVE/logs'
 export DMS_reference_file_path=$DMS_reference_file_path_subs
 # export DMS_reference_file_path=$DMS_reference_file_path_indels
-ls ../../proteingym/baselines/EVE
-python ../../proteingym/baselines/EVE/train_VAE.py \
+
+export DMS_indices=7
+
+echo "Reference file contains $DMS_indices proteins"
+
+
+for ((i=0;i<DMS_indices;i++)); do
+    python ../../proteingym/baselines/EVE/train_VAE.py \
     --MSA_data_folder ${DMS_MSA_data_folder} \
     --DMS_reference_file_path ${DMS_reference_file_path} \
-    --protein_index "${DMS_index}" \
+    --protein_index ${i} \
     --MSA_weights_location ${DMS_MSA_weights_folder} \
     --VAE_checkpoint_location ${DMS_EVE_model_folder} \
     --model_parameters_location ${model_parameters_location} \
@@ -44,10 +50,11 @@ python ../../proteingym/baselines/EVE/train_VAE.py \
     --skip_existing \
     --experimental_stream_data \
     --force_load_weights
+done
 
 #run train EVE script
 
 cd ../../..
-tar -czvf TrainedModel_job$1.tar.gz TrainedModel
-mv TrainedModel_job$1.tar.gz /staging/sharma55/
-rm -rf TrainedModel TrainedModel_job1.tar.gz
+tar -czvf TrainedModels_job$1.tar.gz TrainedModel
+mv TrainedModels_job$1.tar.gz /staging/sharma55/
+rm -rf TrainedModel TrainedModels_job1.tar.gz
