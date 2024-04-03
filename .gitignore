@@ -1,0 +1,5 @@
+# Log and Output files #
+########################
+*.log
+*.out
+*.err
