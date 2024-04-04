@@ -23,4 +23,4 @@ request_memory = 32GB
 request_disk = 50GB
 
 # Specify 6 jobs
-queue 31
+queue 108

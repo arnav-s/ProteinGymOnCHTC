@@ -21,7 +21,7 @@ export DMS_MSA_data_folder="$../../../ProteinGymData/DMS_ProteinGym_substitution
 export DMS_reference_file_path_subs=../../reference_files/CHTC_ref_files/DMS_substitutions_queue"${1}".csv
 export DMS_MSA_weights_folder="../../../ProteinGymData/DMS_msa_weights"
 export DMS_MSA_data_folder="../../../ProteinGymData/DMS_msa_files"
-export DMS_EVE_model_folder="../../../TrainedModel"
+export DMS_EVE_model_folder="../../../TrainedModels_job$1"
 
 export DMS_index="0"
 export seed="1271"
@@ -37,6 +37,7 @@ echo "Reference file contains $DMS_indices proteins"
 
 
 for ((i=0;i<DMS_indices;i++)); do
+    echo "Training EVE on Protein ${i}"
     python ../../proteingym/baselines/EVE/train_VAE.py \
     --MSA_data_folder ${DMS_MSA_data_folder} \
     --DMS_reference_file_path ${DMS_reference_file_path} \
@@ -52,9 +53,11 @@ for ((i=0;i<DMS_indices;i++)); do
     --force_load_weights
 done
 
+echo "############################## Finished Training ######################################"
 #run train EVE script
 
+echo "Copying trained models"
 cd ../../..
-tar -czvf TrainedModels_job$1.tar.gz TrainedModel
-mv TrainedModels_job$1.tar.gz /staging/sharma55/
+tar -czvf TrainedModels_job$1.tar.gz TrainedModels_job$1
+mv TrainedModels_job$1.tar.gz /staging/sharma55/EVE_trained/
 rm -rf TrainedModel TrainedModels_job1.tar.gz

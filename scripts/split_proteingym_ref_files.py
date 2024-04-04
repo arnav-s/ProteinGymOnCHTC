@@ -1,7 +1,7 @@
 import pandas as pd
 import os, sys
 
-BATCH_SIZE = 7
+BATCH_SIZE = 2
 
 if __name__ == '__main__':
     if len(sys.argv) == 2:
