@@ -1,6 +1,9 @@
 # ProteinGymOnCHTC
 This repository can be used to run Protein Gym benchmarks on UW-Madison's CHTC clusters
 
+## Setting up Repository
+
+Clone the repository and run ```git submodule update --init --recursive```
 
 ## Usage:
 
@@ -8,7 +11,10 @@ This repository can be used to run Protein Gym benchmarks on UW-Madison's CHTC c
 
 Split reference files to pass to different jobs:
 
+
 ``` python scripts/split_proteingym_ref_files.py <path_to_original_ref_file> <output_dir>```
+
+Note: This script requires a python environment with pandas installed
 
 ### Submitting a Job 
 
